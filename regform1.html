@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Registration Form</title>
+	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script type="text/javascript" src="angular.min.js"></script>
 	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,6 +10,11 @@
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<style type="text/css">
+		body {
+		    font: 20px "Montserrat", sans-serif;
+		    line-height: 1.8;
+		    color: #f5f6f7;
+		}
 		.bg-2 { 
     		background-color: #474e5d; /* Dark Blue */
     		color: #ffffff;
@@ -21,30 +27,40 @@
     		padding-top: 70px;
     		padding-bottom: 70px;
 		}
-		form{
+		form {
 			margin-left: 10%;
 			margin-right: 30%;
 
 		}
+		.error {
+			margin-left: 10%;
+			margin-right: 10%;
+			margin-top: 2%;
+
+		}
 		.red{
 			border-color: red;
+		}
+		.navbar-nav h1:hover {
+    		color: #1abc9c !important;
 		}
 	</style>
 </head>
 <body>
 	<script type="text/javascript" src="jquery-2.2.0.min.js"></script>
 	<script type="text/javascript" src="angular.min.js"></script>
-	<nav style="margin-bottom: 0px; color: navy; position: fixed; margin-left: 0px;" class="navbar navbar-default col-xs-12">
+	<nav style="margin-bottom: 0px; color: navy; position: fixed; margin-left: 0px; padding-top: 15px; padding-bottom: 15px; letter-spacing: 5px;" class="navbar navbar-default col-xs-12">
   		<div class="container">
     		<div class="navbar-header">
     			<h1>Registration Form</h1>
     		</div>
     	</div>
     </nav>
-	<div style="margin-top: 0px;" class="container-fluid bg-2 text-center">
+	<div style="padding-top: 10%;" class="container-fluid bg-2 text-center">
   		<h3>Let us get to know you!</h3>
   		<p>Please fill in your details in the respective columns and embark on an amazing journey with us!!</p>
 	</div>
+	<div id="error" role="alert"></div>
 	<div class="container-fluid bg-3 text-left">
 		<form role="form">
   			<div class="form-group">
@@ -74,14 +90,19 @@
     			<input type="email" placeholder="Enter E-mail." class="form-control" id="email">
   			</div>
   			<div id="emaildiv"></div>
+  			<div class="form-group">
+		    	<label for="state">4.State:</label>
+		    </div>
+		</form>    	
   			<div ng-app="FirstApplication">
 				<div ng-controller="sampleController">
-		  			<div class="form-group">
-		    			<label for="state">4.State:</label>
-		    			<div class="input-group">
-		      				<input ng-model="inputState" type="text" class="form-control" aria-label="..." id="st">
+		  			<form class="form-inline" style="padding-bottom: 2%;" role="form">
+		    			<div class="input-group form-group col-xs-11">
+		      				<input ng-model="inputState" type="text" class="form-control" aria-label="..." id="st" placeholder="Enter state or union territory." style="border-radius: 5%;">
 		      					
-		      				<div class="input-group-btn">
+		      				
+		    			</div><!-- /input-group -->
+		    			<div class="input-group-btn form-group">
 		        				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
 		        				<ul class="dropdown-menu dropdown-menu-right">
 		        				
@@ -95,24 +116,25 @@
 		          					
 		          					
 		        				</ul>
-		      				</div><!-- /btn-group -->
-		    			</div><!-- /input-group -->
-		  			</div>
+		      			</div><!-- /btn-group -->
+		  			</form>
 		  		</div>
-		  	</div>		
-  			<div class="form-group">
-    			<label for="pwd">5.Password:</label>
-    			<input type="password" placeholder="Enter password." class="form-control" id="pwd">
-  			</div>
-  			<div class="form-group" id="pwddiv"></div>
-  			<div class="form-group">
-    			<label for="pwd">6.Confirm Password:</label>
-    			<input type="password" placeholder="Enter your password again." class="form-control" id="cpwd">
-  			</div>
-  			<div class="form-group" id="cpwddiv"></div>
-  			<button type="button" class="btn btn-primary btn-lg" id="submit">
-  				<span class="glyphicon glyphicon-lock"></span> Submit
-			</button>
+		  	</div>
+		  	<form role="form">		
+	  			<div class="form-group">
+	    			<label for="pwd">5.Password:</label>
+	    			<input type="password" placeholder="Enter password." class="form-control" id="pwd">
+	  			</div>
+	  			<div class="form-group" id="pwddiv"></div>
+	  			<div class="form-group">
+	    			<label for="pwd">6.Confirm Password:</label>
+	    			<input type="password" placeholder="Enter your password again." class="form-control" id="cpwd">
+	  			</div>
+	  			<div class="form-group" id="cpwddiv"></div>
+	  			<button type="button" class="btn btn-primary btn-lg" id="submit">
+	  				<span class="glyphicon glyphicon-lock"></span> Submit
+				</button>
+			</form>
 			<script type="text/javascript">
 				var app = angular.module("FirstApplication",[]);
 					app.controller("sampleController",function ($scope) {
@@ -244,6 +266,26 @@
 									$('#cpwd').removeClass("red");
 										
 								}
+							if(success==1)
+								{
+									submit.innerHTML=
+										'<span class="glyphicon glyphicon-ok"></span> Submitted successfully!'
+									;
+									$('#submit').addClass("btn-success disabled");
+									$('#submit').removeClass("btn-primary");
+									error.innerHTML=
+										''
+									;
+									$('#error').removeClass("alert alert-danger error");
+								}
+							else
+								{
+									error.innerHTML=
+										'<b>Error! </b>Please enter valid values for the marked fields.'
+									;
+									$('#error').addClass("alert alert-danger error");
+										
+								}		
 												
 							
 						}
